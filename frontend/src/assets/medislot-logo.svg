@@ -1,0 +1,32 @@
+<svg
+  width="260"
+  height="60"
+  viewBox="0 0 260 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Icon Background -->
+  <rect x="0" y="0" width="56" height="56" rx="14" fill="#4F6CF7"/>
+
+  <!-- Medical Spark Icon -->
+  <path
+    d="M28 12
+       C30 20, 36 22, 44 24
+       C36 26, 30 30, 28 44
+       C26 30, 20 26, 12 24
+       C20 22, 26 20, 28 12Z"
+    fill="white"
+  />
+
+  <!-- Brand Text -->
+  <text
+    x="72"
+    y="38"
+    font-size="32"
+    font-weight="700"
+    font-family="Inter, Arial, sans-serif"
+    fill="#1E293B"
+  >
+    MediSlot
+  </text>
+</svg>
