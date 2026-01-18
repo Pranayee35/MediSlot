@@ -1,6 +1,7 @@
 import validator from "validator"
 import bcrypt from "bcrypt"
 import {v2 as cloudinary} from "cloudinary"
+import doctorModel from "../models/doctorModel.js"
 // API for adding doctor
 const addDoctor = async (req,res)=>{
     
@@ -15,7 +16,7 @@ const addDoctor = async (req,res)=>{
         }
 
         //validating email format
-        if(validator.isEmail(email)){
+        if(!validator.isEmail(email)){
             return res.json({success:false,message:"Please enter a valid email"})
         }
 
@@ -39,14 +40,35 @@ const addDoctor = async (req,res)=>{
             password:hashedPassword,
             speciality,
             degree,
+            about,
             experience,
             fees,
             address:JSON.parse(address),
             date:Date.now()
         }
 
-    }catch(error){
+        const newDoctor= new doctorModel(doctorData)
+        await newDoctor.save()
+        // new doctorModel(doctorData)
+        // ✔️ Mongoose:
 
+        // Takes doctorData
+
+        // Matches it against the schema
+
+        // Creates a new Doctor document object
+
+        // This object exists only in server memory
+
+        // ⚠️ Nothing is saved to MongoDB yet
+    // when .save() it gets saved into mongoDB
+    // like submitting form after filling it
+        res.json({success:true,message:"Doctor Added"})
+
+    }catch(error){
+        console.log(error);
+        res.json({success:false,message:error.message})
+        
     }
 }
 
