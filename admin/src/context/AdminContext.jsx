@@ -5,8 +5,12 @@ export const AdminContext = createContext()
 
 const AdminContextProvider = (props) => {
     const [atoken,setAtoken] = useState('')
+
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
     const value = {
-        atoken,setAtoken
+        atoken,setAtoken,
+        backendUrl
     }
 
     return(
