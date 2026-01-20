@@ -4,6 +4,8 @@ import { useContext } from 'react'
 import { useState } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import axios from 'axios'
+// Imports Axios to send HTTP requests to your backend.
+import { toast } from 'react-toastify'
 
 const Login = () => {
     const [state,setState] = useState('Admin')
@@ -20,13 +22,16 @@ const Login = () => {
             if(state==='Admin'){
                 const {data} = await axios.post(backendUrl+'/api/admin/login',{email,password})
                 if(data.success){
+
                     console.log(data.token);
-                    
+
                     localStorage.setItem('atoken',data.token)
                     setAtoken(data.token)
-                }
+                }else{
+                    toast.error(data.message)
+                 }
             }else{
-
+                
             }
         }catch(error){
             console.log(error);
