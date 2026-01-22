@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { AdminContext } from '../../context/AdminContext'
 
 const DoctorsList = () => {
-  const {doctors,atoken,getAllDoctors} = useContext(AdminContext)
+  const {doctors,atoken,getAllDoctors,changeAvailability} = useContext(AdminContext)
   useEffect(()=>{
     if(atoken){
       getAllDoctors()
@@ -21,7 +21,7 @@ const DoctorsList = () => {
               {item.speciality}
             </p>
             <div className='mt-2 flex items-center gap-1 text-sm'>
-              <input type='checkbox' checked={item.available}/>
+              <input onChange={()=>changeAvailability(item._id)} type='checkbox' checked={item.available}/>
               <p>Available</p>
             </div>
           </div>
