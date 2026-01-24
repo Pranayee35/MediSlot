@@ -13,7 +13,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken,userData } = useContext(AppContext);
+
 
   const [showMenu, setShowMenu] = useState(false);
   const [open, setOpen] = useState(false);
@@ -57,13 +58,14 @@ const Navbar = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-4 relative">
-        {token ? (
+        {token && userData 
+        ? (
           /* Profile Dropdown */
           <div
             className="flex items-center gap-2 cursor-pointer relative"
             onClick={() => setOpen((prev) => !prev)}
           >
-            <img className="rounded-full w-8" src={profile_pic} alt="profile" />
+            <img className="rounded-full w-8" src={userData.image} alt="profile" />
             <img className="w-2" src={dropDown_icon} alt="dropdown" />
 
             {/* Dropdown Menu */}
