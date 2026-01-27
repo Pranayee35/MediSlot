@@ -136,7 +136,7 @@ const updateProfile = async (req, res) => {
 
 const bookAppointment = async(req,res)=>{
   try{
-    const {userId,docId,slotDate,slotTime} = req.body
+    const {docId,slotDate,slotTime} = req.body
 
     const docData = await doctorModel.findById(docId).select('-password')
 
@@ -151,16 +151,19 @@ const bookAppointment = async(req,res)=>{
       if(slots_booked[slotDate].includes(slotTime)){
         return res.json({success:false,message:"Slot not available"})
       }else{
-        slots_booked[slotDate.push(slotTime)]
+        slots_booked[slotDate].push(slotTime)
       }
     }else{
       slots_booked[slotDate] = []
       slots_booked[slotDate].push[slotTime]
     }
 
+    const userId = req.userId;
+
     const userData = await userModel.findById(userId).select('-password')
 
     delete docData.slots_booked
+
 
     const appointmentData = {
       userId,
@@ -182,9 +185,12 @@ const bookAppointment = async(req,res)=>{
     res.json({success:true,message:"Appointment booked"})
 
   }catch(error){
+    console.log(error);
+    res.json({ success: false, message: error.message })
+    
 
   }
 }
 
 
-export {registerUser,loginUser,getProfile,updateProfile}
+export {registerUser,loginUser,getProfile,updateProfile,bookAppointment}
