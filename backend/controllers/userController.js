@@ -211,11 +211,13 @@ const listAppointment = async(req,res)=>{
 const cancelAppointment = async(req,res)=>{
   try{
 
-    const {userId,appointmentId} = req.body
+    const { appointmentId } = req.body
+const userId = req.userId
+
     const appointmentData = await appointmentModel.findById(appointmentId)
 
     // verify appointment user
-    if(appointmentData.userId !== userId){
+    if(appointmentData.userId.toString() !== userId){
       return res.json({success:false,message:"Unauthorised action"})
     }
 
