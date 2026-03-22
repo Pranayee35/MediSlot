@@ -24,7 +24,7 @@ const addDoctor = async (req,res)=>{
         }
 
         // validating strong password
-        if(password.length < 8){
+        if(password.length < 6){
             return res.json({success:false,message:"Please enter a strong password"})
         }
 

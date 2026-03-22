@@ -6,7 +6,7 @@ import {toast} from "react-toastify"
 export const AdminContext = createContext()
 
 const AdminContextProvider = (props) => {
-    const [atoken,setAtoken] = useState('')
+    const [atoken,setAtoken] = useState(localStorage.getItem('atoken')?localStorage.getItem('atoken'):'')
     const [doctors,setDoctors] = useState([])
     const [appointments,setAppointments] = useState([])
     const [dashData,setDashData] = useState(false)

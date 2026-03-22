@@ -1,19 +1,22 @@
 import React from 'react'
 import { useContext } from 'react'
-
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useState,useEffect } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import axios from 'axios'
 // Imports Axios to send HTTP requests to your backend.
 import { toast } from 'react-toastify'
+import { DoctorContext } from '../context/DoctorContext'
+
 
 const Login = () => {
     const [state,setState] = useState('Admin')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
-
+    const navigate = useNavigate()
     const {setAtoken,backendUrl} = useContext(AdminContext)
-
+    const {setDtoken} = useContext(DoctorContext)
+     
     const onSubmitHandler = async(e)=>{
 
         e.preventDefault()
@@ -27,11 +30,20 @@ const Login = () => {
 
                     localStorage.setItem('atoken',data.token)
                     setAtoken(data.token)
+                    navigate('/doctor-dashboard')
                 }else{
                     toast.error(data.message)
                  }
             }else{
-                
+                const {data} = await axios.post(backendUrl+'/api/doctor/login',{email,password})
+                if(data.success){
+                    localStorage.setItem('dtoken',data.token)
+                    setDtoken(data.token)
+                    console.log(data.token);
+                    
+                }else{
+                    toast.error(data.message)
+                }
             }
         }catch(error){
             console.log(error);
@@ -39,9 +51,12 @@ const Login = () => {
             
         }
     }
-
+    useEffect(() => {
+       setEmail('')
+       setPassword('')
+     }, [])
   return (
-    <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
+    <form autoComplete='off' onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
     <div className='flex flex-col gap-3 m-auto items-start p-8 min-w-85 sm:min-w-96 border rounded-xl text-[#5E5E5E] text-sm shadow-lg'>
         <p className='text-2xl font-semibold m-auto'><span className='text-[#5f6fff]'>{state} </span>Login</p>
         <div className='w-full'>
